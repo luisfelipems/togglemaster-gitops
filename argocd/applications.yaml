@@ -1,3 +1,4 @@
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -5,10 +6,12 @@ metadata:
   namespace: argocd
   labels:
     project: togglemaster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_USUARIO/togglemaster-gitops
+    repoURL: https://github.com/luisfelipems/togglemaster-gitops
     targetRevision: main
     path: apps/auth # pasta dentro do repositório GitOps
   destination:
@@ -29,10 +32,14 @@ kind: Application
 metadata:
   name: flag-service
   namespace: argocd
+  labels:
+    project: togglemaster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: default
   source:
-    repoURL: https://github.com/SEU_USUARIO/togglemaster-gitops
+    repoURL: https://github.com/luisfelipems/togglemaster-gitops
     targetRevision: main
     path: apps/flag
   destination:
@@ -42,7 +49,91 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true
 
 ---
-# Repita o padrão para targeting, evaluation e analytics...
-# (apenas altere o name e o path)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: targeting-service
+  namespace: argocd
+  labels:
+    project: togglemaster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/luisfelipems/togglemaster-gitops
+    targetRevision: main
+    path: apps/targeting
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: togglemaster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: evaluation-service
+  namespace: argocd
+  labels:
+    project: togglemaster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/luisfelipems/togglemaster-gitops
+    targetRevision: main
+    path: apps/evaluation
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: togglemaster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: analytics-service
+  namespace: argocd
+  labels:
+    project: togglemaster
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/luisfelipems/togglemaster-gitops
+    targetRevision: main
+    path: apps/analytics
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: togglemaster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true
