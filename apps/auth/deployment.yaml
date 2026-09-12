@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: auth-service
+  namespace: togglemaster
+  labels:
+    app: auth-service
+    version: v1
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: auth-service
+
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+
+  template:
+    metadata:
+      labels:
+        app: auth-service
+        version: v1
+
+    spec:
+      containers:
+        - name: auth
+
+          # ESTA LINHA É ATUALIZADA PELO PIPELINE CI/CD
+          image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/togglemaster/auth:latest
+          imagePullPolicy: Always
+
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: host
+
+            - name: DB_NAME
+              value: auth
+
+            - name: DB_USER
+              value: admin
+
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: password
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-jwt-secret
+                  key: secret
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
