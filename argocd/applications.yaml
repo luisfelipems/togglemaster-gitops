@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: auth-service
+  namespace: argocd
+  labels:
+    project: togglemaster
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SEU_USUARIO/togglemaster-gitops
+    targetRevision: main
+    path: apps/auth # pasta dentro do repositório GitOps
+  destination:
+    server: https://kubernetes.default.svc # cluster atual
+    namespace: togglemaster
+  syncPolicy:
+    automated:
+      prune: true # remove recursos que foram deletados do Git
+      selfHeal: true # reverte mudanças manuais não autorizadas
+    syncOptions:
+      - CreateNamespace=true # cria o namespace se não existir
+      - PrunePropagationPolicy=foreground
+      - ApplyOutOfSyncOnly=true # só aplica o que mudou
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flag-service
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SEU_USUARIO/togglemaster-gitops
+    targetRevision: main
+    path: apps/flag
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: togglemaster
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+# Repita o padrão para targeting, evaluation e analytics...
+# (apenas altere o name e o path)
