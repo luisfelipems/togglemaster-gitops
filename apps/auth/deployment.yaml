@@ -32,7 +32,7 @@ spec:
         - name: auth
 
           # ESTA LINHA É ATUALIZADA PELO PIPELINE CI/CD
-          image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/togglemaster/auth:latest
+          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/auth:latest
           imagePullPolicy: Always
 
           ports:
