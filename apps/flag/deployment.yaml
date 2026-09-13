@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flag-service
+  namespace: togglemaster
+  labels:
+    app: flag-service
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flag-service
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: flag-service
+        version: v1
+    spec:
+      containers:
+        - name: flag
+          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/flag:latest
+          ports:
+            - containerPort: 8002
+              name: http
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: flag-db-secret
+                  key: database_url
+            - name: AUTH_SERVICE_URL
+              value: "http://auth-service.togglemaster.svc.cluster.local"
+            - name: PORT
+              value: "8002"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
