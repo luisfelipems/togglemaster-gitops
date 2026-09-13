@@ -43,7 +43,7 @@ spec:
                   name: evaluation-service-secret
                   key: service-api-key
             - name: REDIS_URL
-              value: "togglemaster-redis.futaqz.0001.sae1.cache.amazonaws.com:6379"
+              value: "redis://togglemaster-redis.futaqz.0001.sae1.cache.amazonaws.com:6379"
             - name: AWS_SQS_URL
               value: "https://sqs.sa-east-1.amazonaws.com/940104439733/togglemaster-events"
             - name: AWS_REGION
