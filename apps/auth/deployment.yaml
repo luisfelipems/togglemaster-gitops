@@ -70,6 +70,12 @@ spec:
                 secretKeyRef:
                   name: auth-jwt-secret
                   key: secret
+                  
+            - name: MASTER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: auth-jwt-secret
+                  key: master-key
 
           resources:
             requests:
