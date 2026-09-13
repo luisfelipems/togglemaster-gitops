@@ -51,7 +51,7 @@ spec:
               value: authdb
 
             - name: DB_USER
-              value: admin
+              value: luissilva
 
             - name: DB_PASSWORD
               valueFrom:
@@ -70,7 +70,7 @@ spec:
                 secretKeyRef:
                   name: auth-jwt-secret
                   key: secret
-                  
+
             - name: MASTER_KEY
               valueFrom:
                 secretKeyRef:
