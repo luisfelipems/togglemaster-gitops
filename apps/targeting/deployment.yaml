@@ -29,7 +29,7 @@ spec:
                   name: targeting-db-secret
                   key: database_url
             - name: AUTH_SERVICE_URL
-              value: "http://auth-service.togglemaster.svc.cluster.local:8080"
+              value: "http://auth-service.togglemaster.svc.cluster.local:80"
           resources:
             requests:
               cpu: 100m
