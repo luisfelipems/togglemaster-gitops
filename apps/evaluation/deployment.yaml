@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evaluation-service
+  namespace: togglemaster
+  labels:
+    app: evaluation-service
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: evaluation-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: evaluation-service
+        version: v1
+    spec:
+      containers:
+        - name: evaluation
+          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/evaluation:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8004
+              name: http
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8004"
+            - name: FLAG_SERVICE_URL
+              value: "http://flag-service.togglemaster.svc.cluster.local"
+            - name: TARGETING_SERVICE_URL
+              value: "http://targeting-service.togglemaster.svc.cluster.local"
+            - name: SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: evaluation-service-secret
+                  key: service-api-key
+            - name: REDIS_URL
+              value: "togglemaster-redis.futaqz.0001.sae1.cache.amazonaws.com:6379"
+            - name: AWS_SQS_URL
+              value: "https://sqs.sa-east-1.amazonaws.com/940104439733/togglemaster-events"
+            - name: AWS_REGION
+              value: "sa-east-1"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
