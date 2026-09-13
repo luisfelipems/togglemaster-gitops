@@ -48,7 +48,7 @@ spec:
                   key: host
 
             - name: DB_NAME
-              value: auth
+              value: authdb
 
             - name: DB_USER
               value: admin
