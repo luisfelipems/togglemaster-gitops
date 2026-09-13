@@ -59,6 +59,12 @@ spec:
                   name: auth-db-secret
                   key: password
 
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: auth-db-secret
+                  key: database-url
+
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
