@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: flag
-          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/flag:latest
+          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/flag:v1.0.0-ef238735c1e549dc279acf50a537c9c9ba6ffdbb
           ports:
             - containerPort: 8002
               name: http
