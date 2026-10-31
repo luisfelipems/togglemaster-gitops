@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: evaluation
-          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/evaluation:v1.0.0-dc7c3cfe6f298cdce443baf314d36186822d82b3
+          image: 940104439733.dkr.ecr.sa-east-1.amazonaws.com/togglemaster/evaluation:v1.0.0-96b4e70672945d792f734a90b49b89698b187c13
           imagePullPolicy: Always
           ports:
             - containerPort: 8004
