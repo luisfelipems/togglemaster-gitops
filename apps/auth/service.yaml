@@ -17,5 +17,3 @@ spec:
       
 
   type: ClusterIP # Acessível apenas dentro do cluster
-
-    #Teste Tech Challenge 4

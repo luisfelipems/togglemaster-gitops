@@ -12,5 +12,3 @@ spec:
       protocol: TCP
       name: http
   type: ClusterIP
-
-    #Teste Tech Challenge 4
