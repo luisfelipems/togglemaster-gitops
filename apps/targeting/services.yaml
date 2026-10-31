@@ -10,3 +10,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8003
+
+        #Teste Tech Challenge 4

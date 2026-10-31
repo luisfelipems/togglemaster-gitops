@@ -12,3 +12,5 @@ spec:
       targetPort: 8005
       protocol: TCP
   type: ClusterIP
+
+  #Teste Tech Challenge 4
