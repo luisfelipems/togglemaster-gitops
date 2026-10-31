@@ -48,6 +48,11 @@ spec:
               value: "https://sqs.sa-east-1.amazonaws.com/940104439733/togglemaster-events"
             - name: AWS_REGION
               value: "sa-east-1"
+            # --- OpenTelemetry (Fase 4) ---
+            - name: OTEL_SERVICE_NAME
+              value: "evaluation-service"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "otel-collector.monitoring:4317"
           resources:
             limits:
               cpu: 500m

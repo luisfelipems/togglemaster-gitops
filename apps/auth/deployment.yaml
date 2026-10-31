@@ -77,6 +77,13 @@ spec:
                   name: auth-jwt-secret
                   key: master-key
 
+            # --- OpenTelemetry (Fase 4) ---
+            - name: OTEL_SERVICE_NAME
+              value: "auth-service"
+
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: "otel-collector.monitoring:4317"
+
           resources:
             requests:
               cpu: "100m"

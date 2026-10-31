@@ -30,6 +30,11 @@ spec:
                   key: database_url
             - name: AUTH_SERVICE_URL
               value: "http://auth-service.togglemaster.svc.cluster.local:80"
+            # --- OpenTelemetry (Fase 4) ---
+            - name: OTEL_SERVICE_NAME
+              value: "targeting-service"
+            - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: "http://otel-collector.monitoring:4318/v1/traces"
           resources:
             requests:
               cpu: 100m
